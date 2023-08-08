@@ -4,10 +4,18 @@ import { Navbar } from "@/components/Navbar";
 import { ProductCard } from "@/components/ProductCard";
 import { SearchBar } from "@/components/SearchBar";
 import { Filters } from "@/components/Filters";
+import { fetchProducts } from "../../utils";
+import { useEffect, useState } from "react";
+import { ProductProps } from "../../types";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [products, setProducts] = useState<ProductProps[]>();
+  const getProduct = () => fetchProducts().then((res) => setProducts(res));
+  useEffect(() => {
+    getProduct();
+  }, []);
   return (
     <main
       className={`flex min-h-screen flex-col items-center border w-full ${inter.className}`}>
@@ -17,11 +25,9 @@ export default function Home() {
         <div className="flex flex-col items-center gap-10 w-full">
           <SearchBar />
           <div className="w-full flex flex-wrap justify-center gap-x-10 gap-y-16">
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            {products?.map((product, index) => (
+              <ProductCard {...product} key={product?.id} />
+            ))}
           </div>
         </div>
       </div>

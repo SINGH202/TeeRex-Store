@@ -17,7 +17,7 @@ export const FilterOption = ({
         }}
         className="bg-gray-400 accent-[#50d71e]"
       />
-      <span>{title}</span>
+      <span className="first-letter:uppercase">{title}</span>
     </div>
   );
 };

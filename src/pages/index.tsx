@@ -4,22 +4,17 @@ import { Navbar } from "@/components/Navbar";
 import { ProductCard } from "@/components/ProductCard";
 import { SearchBar } from "@/components/SearchBar";
 import { Filters } from "@/components/Filters";
-import { fetchProducts } from "../../utils";
-import { useEffect, useState } from "react";
-import { ProductProps } from "../../types";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "@/features/productSlice";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-
   const dispatch = useDispatch();
   const { products } = useSelector((store: any) => store.products);
-  console.log(products, "root");
 
   useEffect(() => {
-
     dispatch(getProducts() as any);
   }, []);
   return (

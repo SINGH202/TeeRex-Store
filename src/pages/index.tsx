@@ -8,18 +8,20 @@ import { fetchProducts } from "../../utils";
 import { useEffect, useState } from "react";
 import { ProductProps } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "@/features/productSlice";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  // const [products, setProducts] = useState<ProductProps[]>();
+
   const dispatch = useDispatch();
   const { products } = useSelector((store: any) => store.products);
   console.log(products, "root");
-  // const getProduct = () => fetchProducts().then((res) => setProducts(res));
-  // useEffect(() => {
-  //   getProduct();
-  // }, []);
+
+  useEffect(() => {
+
+    dispatch(getProducts() as any);
+  }, []);
   return (
     <main
       className={`flex min-h-screen flex-col items-center border w-full ${inter.className}`}>

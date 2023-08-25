@@ -18,62 +18,73 @@ const initialState = {
   isLoading: true,
 };
 
-export const getProducts = createAsyncThunk(async () => {
-  try {
-    console.log("called while api");
-    const resp = await fetch(
-      "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/catalogue.json"
-    ).then((res) => res.json());
-    return resp;
-  } catch (error) {
-    console.log("called while api");
-    return thunkAPI.rejectWithValue("Something went wrong");
+export const getProducts = createAsyncThunk(
+  "get/getProducts",
+  async (name, thunkAPI) => {
+    try {
+      const resp = await fetch(BASE_URL).then((res) => res.json());
+      return resp;
+    } catch (error) {
+      return thunkAPI.rejectWithValue("Something went wrong");
+    }
   }
-});
+);
 
 const productsSlice = createSlice({
   name: "products",
   initialState,
-  //   reducers: {
-  //     removeItem: (state, action) => {
-  //       const itemId = action.payload;
-  //       state.products = state.products.filter((item) => item.id !== itemId);
-  //     },
-  //     clearProducts: (state) => {
-  //       state.products = [];
-  //     },
-  //   },
+  reducers: {
+    removeItem: (state, action) => {
+      const itemId = action.payload;
+      state.products = state.products.filter((item) => item.id !== itemId);
+    },
+    clearProducts: (state) => {
+      state.products = [];
+    },
+    // getData:(state, action) => {
+    //     state.products = getProducts()
+    // }
+  },
+  extraReducers: {
+    [getProducts.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getProducts.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.products = payload;
+    },
+    [getProducts.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+    },
+  },
   //   extraReducers: (builder) => {
   //     builder
   //       .addCase(getProducts.pending, (state) => {
-  //         console.log("pending", action);
   //         state.isLoading = true;
   //       })
   //       .addCase(getProducts.fulfilled, (state, action) => {
-  //         console.log("full filled", action);
   //         state.isLoading = false;
   //         state.products = action.payload;
   //       })
   //       .addCase(getProducts.rejected, (state, action) => {
-  //         console.log(action, "rejected");
   //         state.isLoading = false;
   //       });
   //   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(getProducts.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getProducts.fulfilled, (state, action) => {
-        // console.log(action);
-        state.isLoading = false;
-        state.products = action.payload;
-      })
-      .addCase(getProducts.rejected, (state, action) => {
-        console.log(action);
-        state.isLoading = false;
-      });
-  },
+  //   extraReducers: (builder) => {
+  //     builder
+  //       .addCase(getProducts.pending, (state) => {
+  //         state.isLoading = true;
+  //       })
+  //       .addCase(getProducts.fulfilled, (state, action) => {
+  //         // console.log(action);
+  //         state.isLoading = false;
+  //         state.products = action.payload;
+  //       })
+  //       .addCase(getProducts.rejected, (state, action) => {
+  //         console.log(action);
+  //         state.isLoading = false;
+  //       });
+  //   },
 });
 
 export const { clearProducts, removeItem } = productsSlice.actions;

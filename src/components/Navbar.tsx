@@ -15,7 +15,9 @@ export const Navbar = () => {
           Products
         </span>
         <div
-          className="bg-[#D3D3D3] cursor-pointer p-3 rounded-md relative"
+          className={`shadow-md ${
+            router.pathname === "/cart" ? "bg-[#D3D3D3]" : "bg-white"
+          } cursor-pointer p-3 rounded-md relative`}
           onClick={() => {
             router.push("cart");
           }}>
@@ -31,3 +33,4 @@ export const Navbar = () => {
     </div>
   );
 };
+// bg-[#D3D3D3]

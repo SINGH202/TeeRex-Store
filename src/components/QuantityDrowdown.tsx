@@ -8,7 +8,7 @@ export const QuantityDropdown = () => {
       onClick={() => {
         setIsOptionVisible(!isOptionsVisible);
       }}
-      className="relative cursor-pointer flex items-center justify-center gap-2 border-[1.5px] border-black rounded-md px-6 py-1 w-[130px]">
+      className="bg-[#f1f1ef] relative cursor-pointer text-[#595858] flex items-center justify-center gap-2 border-[1.5px] border-[#D3D3D3] rounded-sm px-6 py-1 w-[130px]">
       <span>Qty: {quantity}</span>
       <Image
         width={15}

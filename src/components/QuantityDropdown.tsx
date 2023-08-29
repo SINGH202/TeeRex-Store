@@ -18,7 +18,7 @@ export const QuantityDropdown = () => {
         className={`${isOptionsVisible ? `rotate-180` : ``}`}
       />
       {isOptionsVisible && (
-        <div className="flex flex-col gap-0 rounded-md absolute h-14 -bottom-16 bg-white overflow-y-scroll border border-black w-full">
+        <div className="flex flex-col gap-0 rounded-md absolute h-14 shadow-xl no-scrollbar -bottom-16 bg-white overflow-y-scroll border w-full">
           {Array.from({ length: 15 }).map((_, index) => (
             <div
               key={`item-count-options-${index}`}
